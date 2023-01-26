@@ -8,8 +8,7 @@ Project Functionality and Specification:
 
 
 More information about the Project:
-This Project was made using Visual Studio 2019
-To run a multithreading project in Visual Studio, you should enable a Multithreading option.
+This Project was made using Visual Studio 2019. To run a multithreading project in Visual Studio, you should enable a Multithreading option.
 For more information, visit: https://learn.microsoft.com/en-us/visualstudio/debugger/how-to-use-the-threads-window?view=vs-2022&tabs=csharp
 
 Moreover this Repository Contain:
