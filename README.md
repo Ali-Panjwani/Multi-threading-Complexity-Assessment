@@ -13,8 +13,8 @@ To run a multithreading project in Visual Studio, you should enable a Multithrea
 For more information, visit: https://learn.microsoft.com/en-us/visualstudio/debugger/how-to-use-the-threads-window?view=vs-2022&tabs=csharp
 
 Moreover this Repository Contain:
-Project Proposal
-Project Report
-The Project itself containing MultiThreading File and Input creating file.
+- Project Proposal
+- Project Report
+- The Project itself containing MultiThreading File and Input creating file.
 
 The output File will be created after running the Multithreading File.
