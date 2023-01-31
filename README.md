@@ -1,5 +1,7 @@
 # Multi-threading-Complexity-Assessment
 
+This project compares the time taken to sort data stored in a Doubly Linked List using a single thread and multiple threads with the Merge Sort algorithm. The results provide insights into the performance of sequential and multi-threaded sorting.
+
 Project Functionality and Specification:
 - Analyzed complexity and compiled results of parallel and sequential sorting
 - Summarized quantitative data based on results of sorting
