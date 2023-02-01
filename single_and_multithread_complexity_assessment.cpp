@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <stdio.h>
 #include <vector>
@@ -16,12 +15,16 @@ public:
 	int salary;
 	string department;
 };
+
+
 class Node
 {
 public:
 	employee data;
 	Node* next, * prev;
 };
+
+
 void insert(Node** head, employee data)
 {
 	Node* temp = new Node();
@@ -50,7 +53,9 @@ void print(Node* head,int thread,string str)
 		temp = head;
 		head = head->next;
 	}
-}void file(Node* head)
+}
+
+void file(Node* head)
 {
 	ofstream data("sorted data.txt", std::ios::out | std::ios::trunc);	
 	Node* temp = head;
@@ -64,6 +69,7 @@ void print(Node* head,int thread,string str)
 	}
 	cout << "completed";
 }
+
 void deleteNode(Node** head_ref, Node* del)
 {
 	/* base case */
@@ -88,6 +94,8 @@ void deleteNode(Node** head_ref, Node* del)
 	free(del);
 	return;
 }
+
+
 void append(Node** head_ref, employee new_data)
 {
 	/* 1. allocate node */
@@ -232,6 +240,7 @@ Node* merge(Node* first, Node* second,int choice)
 	}
 	return 0;
 }
+
 Node* mergeSort(Node* head, int choice)
 {
 	if (!head || !head->next)
@@ -245,6 +254,8 @@ Node* mergeSort(Node* head, int choice)
 	// Merge the two sorted halves
 	return merge(head, second,choice);
 }
+
+
 int main()
 {
 	vector <employee> emp;
@@ -262,28 +273,36 @@ int main()
 		}
 	}
 
-	/*for (int i = 0; i < emp.size(); i++)
+	/*
+	for (int i = 0; i < emp.size(); i++)
 	{
 		cout << emp[i].id << " " << emp[i].name << " " << emp[i].salary << " " << emp[i].department << endl;
-	}*/
+	}
+	*/
+	
 	//cout << "\n\n\n" << emp.size();
+	
 	Node* head = NULL;
 	Node* head2 = NULL;
 	int ListSize;
 	ListSize = emp.size();
 	double p_time = omp_get_wtime();
 	{
-#pragma omp for schedule(dynamic) 
+		#pragma omp for schedule(dynamic) 
 		for (int i = 0; i < ListSize; i++)
 			insert(&head, emp[i]);
 	}
-	///*cout << "time for parallel is: " << omp_get_wtime() - p_time << endl;
-	//double s_time = omp_get_wtime();
-	//for (int i = 0; i < ListSize; i++)
-	//	insert(&head2, emp[i]);
-	//cout << "time for serial is: " << omp_get_wtime() - s_time << endl;*/
+	
+	/*
+	cout << "time for parallel is: " << omp_get_wtime() - p_time << endl;
+	double s_time = omp_get_wtime();
+	for (int i = 0; i < ListSize; i++)
+		insert(&head2, emp[i]);
+	cout << "time for serial is: " << omp_get_wtime() - s_time << endl;
+	*/
 	//print(head2);
 	//print(head);
+	
 	int choice,choice1;
 	int threadsize = 1;
 	int divider = 2;
@@ -310,14 +329,14 @@ int main()
 		string str = "";
 		int threadnum = 0;
 
-#pragma omp parallel num_threads(threadsize) shared(head,choice) private(temp1,threadnum,str)
+		#pragma omp parallel num_threads(threadsize) shared(head,choice) private(temp1,threadnum,str)
 		{
 			
 			Node* temp1 = NULL;
-#pragma omp for schedule(static)
+			#pragma omp for schedule(static)
 			for (int i = 0; i < ListSize; i++)
 			{
-#pragma omp critical
+				#pragma omp critical
 				{
 					/*int threadnum = omp_get_thread_num();*/
 					insert(&temp1, head->data);
@@ -329,10 +348,7 @@ int main()
 			
 			if (divider == 2)
 			{
-
-
-
-#pragma omp critical
+				#pragma omp critical
 				{
 					str = " and I have data : ";
 					print(temp1,omp_get_thread_num(),str);
@@ -343,7 +359,7 @@ int main()
 			if (divider == 2)
 			{
 
-#pragma omp critical
+				#pragma omp critical
 				{
 					str = " and I sorted data : ";
 					print(temp1, omp_get_thread_num(), str);
@@ -352,10 +368,10 @@ int main()
 
 			
 			double start = omp_get_wtime();
-#pragma omp for schedule(static)
+			#pragma omp for schedule(static)
 			for (int i = 0; i < ListSize; i++)
 			{
-#pragma omp critical
+				#pragma omp critical
 				{
 					append(&head, temp1->data);
 					deleteNode(&temp1, temp1);
@@ -366,7 +382,6 @@ int main()
 		}
 
 		//cout << endl; print(head); cout << endl; //Remove Bar to observe intermediate result after each loop :)
-
 		if (threadsize == 1)
 			break;
 
